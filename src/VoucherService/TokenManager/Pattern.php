@@ -257,16 +257,16 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
     {
         $separatorCount = $this->configuration->getSeparatorCount();
         $separator = $this->configuration->getSeparator();
-        $prefix = $this->configuration->getPrefix();
+        $prefix = (string)$this->configuration->getPrefix();
         if (!empty($separator)) {
             if (!empty($prefix)) {
-                return strlen($this->configuration->getPrefix()) + 1 + (int) floor($this->configuration->getLength() / $separatorCount) + $this->configuration->getLength();
+                return strlen($prefix) + 1 + (int) floor($this->configuration->getLength() / $separatorCount) + $this->configuration->getLength();
             }
 
             return (int) floor($this->configuration->getLength() / $separatorCount) + $this->configuration->getLength();
         }
 
-        return strlen($this->configuration->getPrefix()) + $this->configuration->getLength();
+        return strlen($prefix) + $this->configuration->getLength();
     }
 
     /**
@@ -451,8 +451,8 @@ class Pattern extends AbstractTokenManager implements ExportableTokenManagerInte
                 if ($this->tokenExists($checkTokens, $insertCheckTokens)) {
                     $checkTokenCount--;
                     unset($checkTokens[$token]);
-                // Check if the length of the checkTokens Array matches the defined step range
-                // so the the checkTokens get matched against the database.
+                    // Check if the length of the checkTokens Array matches the defined step range
+                    // so the the checkTokens get matched against the database.
                 } elseif ($checkTokenCount == $tokenCheckStep) {
                     // Check if any of the tokens in the temporary array checkTokens already exists,
                     // if not so, merge the checkTokens array with the array of tokens to insert and
